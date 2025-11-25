@@ -14,8 +14,5 @@ export interface RsvpFormData {
 
 export const RELATIONSHIP_OPTIONS = [
   "男方親友 (Groom's Friend/Family)",
-  "女方親友 (Bride's Friend/Family)",
-  "共同好友 (Common Friend)",
-  "同事 (Colleague)",
-  "其他 (Other)"
+  "女方親友 (Bride's Friend/Family)"
 ];
