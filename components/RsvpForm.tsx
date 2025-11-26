@@ -28,7 +28,7 @@ const InputField: React.FC<{
 );
 
 export const RsvpForm: React.FC = () => {
-  const [formData, setFormData] = useState<RsvpFormData>({
+  const initialFormState: RsvpFormData = {
     name: '',
     phone: '',
     email: '',
@@ -40,7 +40,9 @@ export const RsvpForm: React.FC = () => {
     needsHighChair: false,
     isVegetarian: false,
     notes: ''
-  });
+  };
+
+  const [formData, setFormData] = useState<RsvpFormData>(initialFormState);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -70,6 +72,11 @@ export const RsvpForm: React.FC = () => {
     setIsSubmitting(false);
   };
 
+  const handleReset = () => {
+    setFormData(initialFormState);
+    setIsSuccess(false);
+  };
+
   if (isSuccess) {
     return (
       <motion.div 
@@ -83,7 +90,7 @@ export const RsvpForm: React.FC = () => {
         <h2 className="text-3xl font-handwriting text-purple-800 mb-4">感謝您的回覆！</h2>
         <p className="text-slate-600 mb-6">我們已收到您的資訊，期待與您相見。</p>
         <button 
-          onClick={() => setIsSuccess(false)}
+          onClick={handleReset}
           className="text-blue-500 hover:text-blue-700 underline"
         >
           填寫另一份 (Fill another)
