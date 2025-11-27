@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Users, Baby, Check, Loader2 } from 'lucide-react';
+import { Loader2, Check } from 'lucide-react';
 import { RsvpFormData, RELATIONSHIP_OPTIONS } from '../types';
 import { submitRsvpToGoogleSheet } from '../services/googleSheetService';
 
+// Minimalist Input Component
 const InputField: React.FC<{
   label: string;
   id: string;
@@ -14,13 +15,13 @@ const InputField: React.FC<{
   placeholder?: string;
   children?: React.ReactNode;
 }> = ({ label, id, children, ...props }) => (
-  <div className="flex flex-col space-y-2">
-    <label htmlFor={id} className="text-purple-800 font-bold text-lg">{label}</label>
+  <div className="flex flex-col space-y-1">
+    <label htmlFor={id} className="text-[#7C98B3] text-xs font-bold tracking-widest uppercase">{label}</label>
     {children ? children : (
       <input
         id={id}
         name={id}
-        className="px-4 py-3 rounded-xl border-2 border-blue-100 focus:border-purple-300 focus:ring focus:ring-purple-100 outline-none transition-all bg-white/80 backdrop-blur-sm text-slate-700"
+        className="w-full py-2 bg-transparent border-b border-[#D3E0EF] focus:border-[#A9B9D0] outline-none text-[#5F6F8C] placeholder-[#C6C8CC] font-serif transition-colors"
         {...props}
       />
     )}
@@ -43,7 +44,6 @@ export const RsvpForm: React.FC = () => {
   };
 
   const [formData, setFormData] = useState<RsvpFormData>(initialFormState);
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -60,14 +60,11 @@ export const RsvpForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate slight delay for better UX if API is too fast/slow
     const success = await submitRsvpToGoogleSheet(formData);
-    
     if (success) {
         setIsSuccess(true);
     } else {
-        alert("傳送失敗，請稍後再試 (Submission failed, please try again)");
+        alert("Submission failed. Please try again.");
     }
     setIsSubmitting(false);
   };
@@ -79,45 +76,33 @@ export const RsvpForm: React.FC = () => {
 
   if (isSuccess) {
     return (
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="bg-white/90 backdrop-blur-md rounded-3xl p-8 shadow-xl text-center border-4 border-double border-purple-100 max-w-lg mx-auto mt-8"
-      >
-        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <Check size={40} className="text-green-500" />
+      <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
+        <div className="w-16 h-16 rounded-full border border-[#D7C7A0] flex items-center justify-center text-[#D7C7A0]">
+          <Check size={24} />
         </div>
-        <h2 className="text-3xl font-handwriting text-purple-800 mb-4">感謝您的回覆！</h2>
-        <p className="text-slate-600 mb-6">我們已收到您的資訊，期待與您相見。</p>
+        <div>
+          <h2 className="text-2xl font-script text-[#7C98B3] mb-2">Thank You</h2>
+          <p className="text-sm font-serif text-[#5F6F8C]">我們已收到您的回覆</p>
+        </div>
         <button 
           onClick={handleReset}
-          className="text-blue-500 hover:text-blue-700 underline"
+          className="text-xs text-[#A9B9D0] border-b border-[#A9B9D0] pb-0.5 hover:text-[#7C98B3]"
         >
-          填寫另一份 (Fill another)
+          填寫另一份回函
         </button>
-      </motion.div>
+      </div>
     );
   }
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="w-full max-w-2xl mx-auto bg-white/60 backdrop-blur-md rounded-3xl p-6 md:p-10 shadow-xl border border-white mt-8 relative overflow-hidden"
-    >
-      {/* Decorative corners */}
-      <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-amber-300 rounded-tl-3xl opacity-50"></div>
-      <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-amber-300 rounded-br-3xl opacity-50"></div>
+    <div className="flex flex-col items-center py-6 h-full overflow-y-auto px-1">
+      <h2 className="text-3xl font-script text-[#7C98B3] mb-2">RSVP</h2>
+      <p className="text-xs text-[#A9B9D0] tracking-[0.2em] uppercase mb-8 font-serif">Please Join Us</p>
 
-      <h2 className="text-3xl font-handwriting text-center text-purple-800 mb-8 flex items-center justify-center gap-2">
-         <span className="text-amber-400">✨</span> 出席回函 RSVP <span className="text-amber-400">✨</span>
-      </h2>
-
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="w-full space-y-8 pb-8">
         
         <InputField 
-          label="您的姓名 (Name)" 
+          label="Name 姓名" 
           id="name" 
           value={formData.name} 
           onChange={handleChange} 
@@ -125,33 +110,23 @@ export const RsvpForm: React.FC = () => {
           placeholder="請輸入全名"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <InputField 
-            label="電話 (Phone)" 
-            id="phone" 
-            type="tel"
-            value={formData.phone} 
-            onChange={handleChange} 
-            required 
-            placeholder="09xx-xxx-xxx"
-          />
-          <InputField 
-            label="電子信箱 (Email)" 
-            id="email" 
-            type="email"
-            value={formData.email} 
-            onChange={handleChange} 
-            placeholder="example@mail.com"
-          />
-        </div>
+        <InputField 
+          label="Phone 電話" 
+          id="phone" 
+          type="tel"
+          value={formData.phone} 
+          onChange={handleChange} 
+          required 
+          placeholder="09xx-xxx-xxx"
+        />
 
-        <InputField label="與新人的關係 (Relationship)" id="relationship" value={formData.relationship} onChange={handleChange}>
+        <InputField label="Relationship 關係" id="relationship" value={formData.relationship} onChange={handleChange}>
           <select
              name="relationship"
              id="relationship"
              value={formData.relationship}
              onChange={handleChange}
-             className="px-4 py-3 rounded-xl border-2 border-blue-100 focus:border-purple-300 outline-none w-full bg-white/80 text-slate-700"
+             className="w-full py-2 bg-transparent border-b border-[#D3E0EF] focus:border-[#A9B9D0] outline-none text-[#5F6F8C] font-serif"
           >
             {RELATIONSHIP_OPTIONS.map(opt => (
               <option key={opt} value={opt}>{opt}</option>
@@ -159,18 +134,21 @@ export const RsvpForm: React.FC = () => {
           </select>
         </InputField>
 
-        {/* Attendance Radios */}
-        <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
-           <label className="text-purple-800 font-bold text-lg block mb-3">是否參加喜宴？ (Attending?)</label>
-           <div className="flex gap-6">
-             <label className="flex items-center gap-2 cursor-pointer">
-               <input type="radio" name="isAttending" value="yes" checked={formData.isAttending === 'yes'} onChange={handleChange} className="w-5 h-5 text-purple-600 accent-purple-500" />
-               <span className="text-slate-700">是，準時出席</span>
-             </label>
-             <label className="flex items-center gap-2 cursor-pointer">
-               <input type="radio" name="isAttending" value="no" checked={formData.isAttending === 'no'} onChange={handleChange} className="w-5 h-5 text-purple-600 accent-purple-500" />
-               <span className="text-slate-700">否，遺憾無法參加</span>
-             </label>
+        {/* Attendance - Custom Radio */}
+        <div className="space-y-2 pt-2">
+           <label className="text-[#7C98B3] text-xs font-bold tracking-widest uppercase block">Attendance 出席意願</label>
+           <div className="flex gap-8 pt-1">
+             {['yes', 'no'].map((val) => (
+               <label key={val} className="flex items-center gap-2 cursor-pointer group">
+                 <div className={`w-4 h-4 rounded-full border border-[#A9B9D0] flex items-center justify-center transition-colors ${formData.isAttending === val ? 'border-[#7C98B3]' : ''}`}>
+                    {formData.isAttending === val && <div className="w-2 h-2 rounded-full bg-[#7C98B3]" />}
+                 </div>
+                 <input type="radio" name="isAttending" value={val} checked={formData.isAttending === val} onChange={handleChange} className="hidden" />
+                 <span className={`text-sm font-serif ${formData.isAttending === val ? 'text-[#5F6F8C]' : 'text-[#9CA3AF]'}`}>
+                   {val === 'yes' ? '準時出席' : '無法參加'}
+                 </span>
+               </label>
+             ))}
            </div>
         </div>
 
@@ -178,119 +156,78 @@ export const RsvpForm: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
-            className="space-y-6"
+            className="space-y-6 pt-2 border-l border-[#D3E0EF] pl-4"
           >
-             <div className="grid grid-cols-2 gap-6">
-                <InputField 
-                  label="出席大人人數" 
-                  id="adultCount" 
-                  type="number" 
-                  value={formData.adultCount} 
-                  onChange={handleChange}
-                  children={
-                    <div className="relative">
-                      <Users className="absolute left-3 top-3.5 text-slate-400" size={18} />
-                      <input 
-                        type="number" 
-                        name="adultCount" 
-                        min="1" 
-                        className="pl-10 pr-4 py-3 w-full rounded-xl border-2 border-blue-100 focus:border-purple-300 outline-none bg-white/80"
-                        value={formData.adultCount}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  }
-                />
-                <InputField 
-                  label="出席兒童人數" 
-                  id="childCount" 
-                  type="number" 
-                  value={formData.childCount} 
-                  onChange={handleChange}
-                  children={
-                    <div className="relative">
-                      <Baby className="absolute left-3 top-3.5 text-slate-400" size={18} />
-                      <input 
-                        type="number" 
-                        name="childCount" 
-                        min="0" 
-                        className="pl-10 pr-4 py-3 w-full rounded-xl border-2 border-blue-100 focus:border-purple-300 outline-none bg-white/80"
-                        value={formData.childCount}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  }
-                />
+             <div className="flex gap-4">
+                <div className="flex-1">
+                  <InputField label="Adults 大人" id="adultCount" value={formData.adultCount} onChange={handleChange}>
+                     <input type="number" name="adultCount" min="1" className="w-full py-2 bg-transparent border-b border-[#D3E0EF] outline-none text-[#5F6F8C]" value={formData.adultCount} onChange={handleChange} />
+                  </InputField>
+                </div>
+                <div className="flex-1">
+                  <InputField label="Kids 兒童" id="childCount" value={formData.childCount} onChange={handleChange}>
+                     <input type="number" name="childCount" min="0" className="w-full py-2 bg-transparent border-b border-[#D3E0EF] outline-none text-[#5F6F8C]" value={formData.childCount} onChange={handleChange} />
+                  </InputField>
+                </div>
              </div>
 
-             <div className="flex flex-col sm:flex-row gap-6">
-                <label className="flex items-center gap-3 cursor-pointer bg-white/50 p-3 rounded-xl border border-blue-50 flex-1 hover:bg-white transition">
-                  <input 
-                    type="checkbox" 
-                    name="needsHighChair" 
-                    checked={formData.needsHighChair} 
-                    onChange={handleChange} 
-                    className="w-5 h-5 rounded text-purple-600 accent-purple-500"
-                  />
-                  <span className="text-slate-700 font-medium">需要兒童座椅 (High Chair)</span>
+             <div className="flex gap-6">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" name="needsHighChair" checked={formData.needsHighChair} onChange={handleChange} className="accent-[#7C98B3]" />
+                  <span className="text-sm font-serif text-[#7C8DA6]">需要兒童椅</span>
                 </label>
-
-                <label className="flex items-center gap-3 cursor-pointer bg-white/50 p-3 rounded-xl border border-blue-50 flex-1 hover:bg-white transition">
-                  <input 
-                    type="checkbox" 
-                    name="isVegetarian" 
-                    checked={formData.isVegetarian} 
-                    onChange={handleChange} 
-                    className="w-5 h-5 rounded text-purple-600 accent-purple-500"
-                  />
-                  <span className="text-slate-700 font-medium">需要素食 (Vegetarian)</span>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" name="isVegetarian" checked={formData.isVegetarian} onChange={handleChange} className="accent-[#7C98B3]" />
+                  <span className="text-sm font-serif text-[#7C8DA6]">需要素食</span>
                 </label>
              </div>
           </motion.div>
         )}
 
-        <div className="bg-purple-50/50 p-4 rounded-xl border border-purple-100">
-           <label className="text-purple-800 font-bold text-lg block mb-3">是否需要電子喜帖？ (E-Invite?)</label>
-           <div className="flex gap-6">
-             <label className="flex items-center gap-2 cursor-pointer">
-               <input type="radio" name="needsElectronicInvite" value="yes" checked={formData.needsElectronicInvite === 'yes'} onChange={handleChange} className="w-5 h-5 text-purple-600 accent-purple-500" />
-               <span className="text-slate-700">是 (Yes)</span>
-             </label>
-             <label className="flex items-center gap-2 cursor-pointer">
-               <input type="radio" name="needsElectronicInvite" value="no" checked={formData.needsElectronicInvite === 'no'} onChange={handleChange} className="w-5 h-5 text-purple-600 accent-purple-500" />
-               <span className="text-slate-700">否 (No)</span>
-             </label>
+        <div className="space-y-2">
+           <label className="text-[#7C98B3] text-xs font-bold tracking-widest uppercase block">E-Invite 電子喜帖</label>
+           <div className="flex gap-8 pt-1">
+             {['yes', 'no'].map((val) => (
+               <label key={val} className="flex items-center gap-2 cursor-pointer">
+                 <div className={`w-4 h-4 rounded-full border border-[#A9B9D0] flex items-center justify-center ${formData.needsElectronicInvite === val ? 'border-[#7C98B3]' : ''}`}>
+                    {formData.needsElectronicInvite === val && <div className="w-2 h-2 rounded-full bg-[#7C98B3]" />}
+                 </div>
+                 <input type="radio" name="needsElectronicInvite" value={val} checked={formData.needsElectronicInvite === val} onChange={handleChange} className="hidden" />
+                 <span className={`text-sm font-serif ${formData.needsElectronicInvite === val ? 'text-[#5F6F8C]' : 'text-[#9CA3AF]'}`}>
+                   {val === 'yes' ? '需要' : '不需要'}
+                 </span>
+               </label>
+             ))}
            </div>
         </div>
 
-        <div className="flex flex-col space-y-2">
-          <label htmlFor="notes" className="text-purple-800 font-bold text-lg">備註 (Notes)</label>
+        <InputField label="Note 備註" id="notes" value={formData.notes} onChange={handleChange}>
           <textarea
             id="notes"
             name="notes"
-            rows={4}
+            rows={2}
             value={formData.notes}
             onChange={handleChange}
-            placeholder="有什麼想對我們說的話嗎？"
-            className="px-4 py-3 rounded-xl border-2 border-blue-100 focus:border-purple-300 outline-none transition-all bg-white/80 backdrop-blur-sm text-slate-700 resize-none"
+            placeholder="..."
+            className="w-full py-2 bg-transparent border-b border-[#D3E0EF] focus:border-[#A9B9D0] outline-none text-[#5F6F8C] font-serif resize-none"
           />
-        </div>
+        </InputField>
 
-        <div className="pt-4 pb-8 text-center">
+        <div className="pt-4 text-center">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-200 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 hover:scale-105 hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full max-w-[200px] py-3 bg-[#A9B9D0] text-white font-rounded tracking-widest text-sm hover:bg-[#98A8BF] transition-colors disabled:opacity-70 rounded-[1px]"
           >
              {isSubmitting ? (
-               <><Loader2 className="animate-spin mr-2" /> 傳送中...</>
+               <span className="flex items-center justify-center gap-2"><Loader2 className="animate-spin" size={16} /> SENDING</span>
              ) : (
-               <><span className="mr-2">送出回覆</span> <Send size={18} className="group-hover:translate-x-1 transition-transform" /></>
+               "送出回覆"
              )}
           </button>
         </div>
 
       </form>
-    </motion.div>
+    </div>
   );
 };

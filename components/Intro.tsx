@@ -1,64 +1,77 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { COUPLE_PHOTO_URL } from '../constants';
-import { Calendar, Heart } from 'lucide-react';
+import { UserRound } from 'lucide-react';
 
 export const Intro: React.FC = () => {
   return (
-    <div className="relative z-10 flex flex-col items-center pt-10 pb-6 px-4">
+    <div className="flex flex-col items-center justify-center h-full min-h-[600px] py-4">
       
-      {/* Photo Frame */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-        className="relative p-3 bg-white/80 backdrop-blur-sm shadow-2xl rounded-2xl rotate-[-2deg] mb-8 max-w-md w-full"
-      >
-        <div className="absolute -top-4 -right-4 text-purple-300 z-20">
-            <Heart fill="#d8b4fe" size={40} className="drop-shadow-md animate-bounce" />
-        </div>
-        
-        {/* Ribbon effect CSS - Updated to Purple theme */}
-        <div className="absolute top-0 left-0 w-full h-full border-2 border-purple-200 rounded-2xl pointer-events-none m-1"></div>
+      {/* Decorative Top Ornament (CSS only) */}
+      <div className="w-24 h-px bg-[#A9B9D0] mb-2 relative">
+         <div className="absolute left-1/2 -top-1.5 -translate-x-1/2 w-3 h-3 border border-[#A9B9D0] rotate-45 bg-[#F7F5EF]"></div>
+      </div>
 
-        <div className="overflow-hidden rounded-xl aspect-[4/3] bg-purple-50">
-             {/* The image source is now pulled directly from constants.ts */}
-             <img 
-               src={"https://i.meee.com.tw/91GLGhj.jpg"} 
-               alt="Happy Couple" 
-               className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
-               onError={(e) => {
-                 // Fallback if image fails to load
-                 (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070&auto=format&fit=crop";
-               }}
-             />
-        </div>
-      </motion.div>
-
-      {/* Text Content - Updated to Purple Gradient Theme */}
       <motion.div 
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 1 }}
-        className="text-center space-y-4"
+        transition={{ duration: 1 }}
+        className="text-center space-y-6 w-full"
       >
-        <div className="flex items-center justify-center space-x-2 text-purple-500 mb-2">
-           <Calendar size={20} />
-           <span className="font-script text-2xl font-bold">Save the Date</span>
+        <p className="font-script text-2xl text-[#A9B9D0]">Wedding Invitation</p>
+
+        {/* Photo Area - Clean, rectangular, fine border */}
+        <div className="relative mx-auto w-4/5 aspect-[3/4] p-2 border border-[#D3E0EF]">
+           <div className="absolute inset-0 m-1 border border-[#A9B9D0] opacity-30 pointer-events-none"></div>
+           <div className="w-full h-full overflow-hidden bg-[#F0F4F8]">
+              <img 
+                src={"https://i.meee.com.tw/91GLGhj.jpg"} 
+                alt="Couple" 
+                className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-1000 grayscale-[20%]"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070&auto=format&fit=crop";
+                }}
+              />
+           </div>
+           {/* Minimal Corner Decors */}
+           <div className="absolute -top-1 -left-1 w-4 h-4 border-t border-l border-[#A9B9D0]"></div>
+           <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b border-r border-[#A9B9D0]"></div>
         </div>
 
-        <h1 className="font-script text-5xl md:text-6xl bg-gradient-to-r from-violet-600 to-fuchsia-500 bg-clip-text text-transparent drop-shadow-sm mb-2 pb-2">
-          2026.01.17
-        </h1>
+        <div className="space-y-4 pt-4">
+          <div className="flex items-center justify-center gap-6 text-[#5F6F8C]">
+            <div className="text-center">
+               <p className="text-xl font-rounded tracking-widest mb-1">莊家琦</p>
+               <p className="text-xs font-serif text-[#9CA3AF] uppercase tracking-wide">Chuang Chia-Chi</p>
+            </div>
+            <span className="font-script text-xl text-[#D7C7A0]">&</span>
+            <div className="text-center">
+               <p className="text-xl font-rounded tracking-widest mb-1">林嘉展</p>
+               <p className="text-xs font-serif text-[#9CA3AF] uppercase tracking-wide">Lin Jia-Jhan</p>
+            </div>
+          </div>
 
-        <p className="font-handwriting text-2xl md:text-3xl text-purple-900/80 leading-relaxed max-w-md mx-auto font-medium">
-          誠摯邀請您前來<br/>
-          一起分享我們的喜悅
-        </p>
+          <div className="py-6">
+            <h1 className="font-script text-5xl text-[#7C98B3] font-normal tracking-wide">
+              2026.01.17
+            </h1>
+            <div className="mt-3 flex items-center justify-center gap-2 text-sm text-[#9CA3AF] tracking-widest font-serif">
+               <span>SATURDAY</span>
+            </div>
+          </div>
 
-        <div className="w-16 h-1 bg-gradient-to-r from-transparent via-purple-300 to-transparent mx-auto mt-6 rounded-full"></div>
+          <p className="font-serif text-[#5F6F8C] text-sm leading-loose tracking-wide max-w-xs mx-auto">
+            誠摯邀請您前來<br/>
+            參與這份溫柔的喜悅
+          </p>
+        </div>
+
       </motion.div>
+
+      {/* Decorative Bottom */}
+      <div className="w-24 h-px bg-[#A9B9D0] mt-8 relative">
+         <div className="absolute left-1/2 -top-1.5 -translate-x-1/2 w-3 h-3 border border-[#A9B9D0] rotate-45 bg-[#F7F5EF]"></div>
+      </div>
     </div>
   );
 };
