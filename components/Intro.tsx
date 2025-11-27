@@ -25,7 +25,7 @@ export const Intro: React.FC = () => {
            <div className="absolute inset-0 m-1 border border-[#A9B9D0] opacity-30 pointer-events-none"></div>
            <div className="w-full h-full overflow-hidden bg-[#F0F4F8]">
               <img 
-                src={"https://i.meee.com.tw/91GLGhj.jpg"} 
+                src={COUPLE_PHOTO_URL} 
                 alt="Couple" 
                 className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-1000 grayscale-[20%]"
                 onError={(e) => {
@@ -60,7 +60,7 @@ export const Intro: React.FC = () => {
 
           <p className="font-serif text-[#5F6F8C] text-sm leading-loose tracking-wide max-w-xs mx-auto">
             誠摯邀請您前來<br/>
-            見證這份溫柔的喜悅
+            見證此刻的幸福微煦
           </p>
         </div>
 

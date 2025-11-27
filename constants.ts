@@ -8,4 +8,4 @@ export const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwI354
 
 // 這裡是用於顯示新人照片的連結
 // 如果要換照片，請將引號內的網址換成新的圖片連結 (結尾通常為 .jpg 或 .png)
-export const COUPLE_PHOTO_URL = "https://i.meee.com.tw/91GLGhj.jpg";
+export const COUPLE_PHOTO_URL = "https://i.meee.com.tw/UM6ZCH0.jpg";

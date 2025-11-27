@@ -19,7 +19,7 @@ export const Schedule: React.FC = () => {
       time: "15:00",
       title: "圓滿送客",
       enTitle: "Farewell",
-      desc: "拍攝留念 / 領取喜糖"
+      desc: "拍攝留念 / 圓滿結束"
     }
   ];
 
