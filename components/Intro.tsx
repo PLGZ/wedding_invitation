@@ -42,12 +42,10 @@ export const Intro: React.FC = () => {
           <div className="flex items-center justify-center gap-6 text-[#5F6F8C]">
             <div className="text-center">
                <p className="text-xl font-rounded tracking-widest mb-1">莊家琦</p>
-               <p className="text-xs font-serif text-[#9CA3AF] uppercase tracking-wide">Chuang Chia-Chi</p>
             </div>
             <span className="font-script text-xl text-[#D7C7A0]">&</span>
             <div className="text-center">
                <p className="text-xl font-rounded tracking-widest mb-1">林嘉展</p>
-               <p className="text-xs font-serif text-[#9CA3AF] uppercase tracking-wide">Lin Jia-Jhan</p>
             </div>
           </div>
 
@@ -62,7 +60,7 @@ export const Intro: React.FC = () => {
 
           <p className="font-serif text-[#5F6F8C] text-sm leading-loose tracking-wide max-w-xs mx-auto">
             誠摯邀請您前來<br/>
-            參與這份溫柔的喜悅
+            見證這份溫柔的喜悅
           </p>
         </div>
 
