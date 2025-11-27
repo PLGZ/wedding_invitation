@@ -7,19 +7,19 @@ export const Schedule: React.FC = () => {
       time: "11:00",
       title: "證婚儀式",
       enTitle: "Ceremony",
-      desc: "戶外草地 / 交換誓詞"
+      desc: "戶外證婚 / 交換誓詞"
     },
     {
       time: "12:00",
       title: "婚宴開席",
       enTitle: "Banquet",
-      desc: "青青格麗絲莊園 / 樹廈廳"
+      desc: "樹廈廳 / 享用佳餚"
     },
     {
       time: "15:00",
       title: "圓滿送客",
       enTitle: "Farewell",
-      desc: "拍攝留念 / 圓滿結束"
+      desc: "感謝蒞臨 / 合影留念"
     }
   ];
 
@@ -50,8 +50,9 @@ export const Schedule: React.FC = () => {
               <div className="flex flex-col items-start">
                 <span className="font-script text-2xl text-[#D7C7A0] leading-none mb-1">{event.time}</span>
                 <h3 className="text-lg font-rounded text-[#5F6F8C] tracking-widest font-medium">{event.title}</h3>
-                <p className="text-xs font-serif text-[#A9B9D0] uppercase tracking-wider mb-1">{event.enTitle}</p>
-                <p className="text-xs text-[#9CA3AF] font-light">{event.desc}</p>
+                <p className="text-xs font-serif text-[#A9B9D0] uppercase tracking-wider mb-2">{event.enTitle}</p>
+                {/* Description: Changed to font-rounded to match title, and restored meaningful text */}
+                <p className="text-sm font-rounded text-[#7C8DA6] font-normal opacity-90">{event.desc}</p>
               </div>
             </motion.div>
           ))}
